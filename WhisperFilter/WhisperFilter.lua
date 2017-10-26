@@ -209,7 +209,7 @@ local function onevent()
     		f2:SetScript("OnEvent", function ()
     			for i=1,table.getn(chatBoxes) do
     				if strlen(chatBoxes[i][1]) > 0 and not string.find(chatBoxes[i][1],"History of: ") then
-						table.insert(chatBoxes[i],"\nHistory of: "..date("%m/%d/%y %H:%M:%S"))
+						table.insert(chatBoxes[i],"History of: "..date("%m/%d/%y %H:%M:%S").."\n")
 					end
 				end
     		end)
@@ -447,6 +447,7 @@ local function onevent()
                 if frameSize < 18 then
                     frameSize = 18
                 end
+
                 FauxScrollFrame_Update(scroller,  frameSize, 17, fontSize)
             end
 
@@ -464,7 +465,9 @@ local function onevent()
             messageFrame:SetScript("OnTextChanged",function(self)
 
                 setFrameSize(messageFrame, WFCopyChatFontSize)
+                scroller:SetVerticalScroll(scroller:GetVerticalScrollRange() )
             end)
+
 
 			scroller:SetScrollChild(messageFrame)
 
@@ -713,7 +716,7 @@ local function onevent()
 								if debug then 
 					    			-- DEFAULT_CHAT_FRAME:AddMessage("TABLE "..frameID.." IS FULL - REMOVING FIRST LINE")
 								end
-								table.remove(chatBoxes[frameID],tableSize)
+								table.remove(chatBoxes[frameID],1)
 							end
 						end
 					end
