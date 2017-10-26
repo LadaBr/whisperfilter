@@ -459,11 +459,10 @@ local function onevent()
 			end)
 
             scroller:SetScript("OnScrollRangeChanged",function()
-                scroller:SetVerticalScroll(scroller:GetVerticalScrollRange() )
+                --scroller:SetVerticalScroll(scroller:GetVerticalScrollRange() )
             end)
 
             messageFrame:SetScript("OnTextChanged",function(self)
-
                 setFrameSize(messageFrame, WFCopyChatFontSize)
                 scroller:SetVerticalScroll(scroller:GetVerticalScrollRange() )
             end)
@@ -1171,7 +1170,7 @@ local function onevent()
 						        	if debug then
 									    DEFAULT_CHAT_FRAME:AddMessage("Sending invite to player: "..arg2)
 									end
-									InviteByName(arg2)
+									InviteUnit(arg2)
 					       		end
 					       	end
 						end
