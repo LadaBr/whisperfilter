@@ -968,7 +968,7 @@ local function onevent()
 					local DefaultMessages = { GetChatWindowMessages(ChatFrameID)}
 					for k,v in pairs(DefaultMessages) do
                         if debug then
-						    DEFAULT_CHAT_FRAME:AddMessage(v.." vs "..event)
+						    -- DEFAULT_CHAT_FRAME:AddMessage(v.." vs "..event)
                         end
 
 						if string.find(event,v) then
@@ -1061,80 +1061,12 @@ local function onevent()
 
 				if not WFClinkDisabled then
 					if arg1 ~= nil then
-				    	local CLINK_PATTERN = '%{CLINK:(%x%x%x%x%x%x%x%x):(%d*):(%d*):(%d*):(%d*):([^}]*)%}'
-					    if string.find(arg1,CLINK_PATTERN) ~= nil then
-					    	if debug then
-							    DEFAULT_CHAT_FRAME:AddMessage("CLINK DAMN ")
-							end
-							local originalMsg = arg1
-					    	local itemColor
-					    	local itemId
-					    	local itemName
-					    	local str
-							local i = 0
-							local start
-							local before
-							local fixedItem
-							local after
-					        for str in string.gmatch(arg1, "[^:]+") do
-					    		if string.find(str,"{CLINK") ~= nil then
-					    			start = i
-					    			before = strsub(str,1,strlen(str)-6)
-					    			if debug then
-										DEFAULT_CHAT_FRAME:AddMessage("Before: "..before)
-									end
-					    		end
-					    		if start ~= nil then 
-						    		if i-start == 1 then
-						    			itemColor = str
-						    			if debug then
-										    DEFAULT_CHAT_FRAME:AddMessage("Color: "..itemColor)
-										end
-						    		end
-						    		if i-start == 2 then
-						    			itemId = str
-						    			if debug then
-										    DEFAULT_CHAT_FRAME:AddMessage("Id: "..itemId)
-										end
-						    		end
-						    		if i-start == 6 then
-						    			local tempStr
-						    			local temp
-						    			for tempStr in string.gmatch(str, "[^}]+") do
-						    				if debug then
-										    	DEFAULT_CHAT_FRAME:AddMessage("FINDING NAME: "..tempStr)
-											end
-											itemName = tempStr
-											break
-										end
-						    			if debug then
-										    DEFAULT_CHAT_FRAME:AddMessage("Name: "..itemName)
-										end
-										after = strsub(str,strlen(itemName)+2)
-										if debug then
-										    DEFAULT_CHAT_FRAME:AddMessage("After: "..after)
-										end
-										break
-						    		end
-						    	end
-					        	i = i + 1
-					        end
-
-					        if itemColor ~= nil and itemId ~= nil and itemName ~= nil then
-						        if debug then
-								    DEFAULT_CHAT_FRAME:AddMessage("Fixed item link: \124c"..itemColor.."\124Hitem:"..itemId..":0:0:0:0:0:0:0:0\124h["..itemName.."]\124h\124r")
-								end
-								fixedItem = "\124c"..itemColor.."\124Hitem:"..itemId..":0:0:0:0:0:0:0:0\124h["..itemName.."]\124h\124r"
-								local editedMsg = before..fixedItem..after
-								if debug then
-									DEFAULT_CHAT_FRAME:AddMessage("Edited message: "..editedMsg)
-								end
-								arg1 = editedMsg
-							end
-					    	--DEFAULT_CHAT_FRAME:AddMessage("\124cffffffff\124Hitem:10050:0:0:0:0:0:0:0:0\124h[Mageweave Bag]\124h\124r");
-							--DEFAULT_CHAT_FRAME:AddMessage("\124cffff8000\124Hitem:13262:0:0:0:0:0:0:0:0\124h[Ashbringer]\124h\124r");
-							--DEFAULT_CHAT_FRAME:AddMessage("{CLINK:ffffffff:10050:0:0:0:Mageweave Bag}");
-					    end
+                        chatstring = string.gsub (arg1, "{CLINK:item:(%x+):(%-?%d-:%-?%d-:%-?%d-:%-?%d-:%-?%d-:%-?%d-:%-?%d-:%-?%d-):([^}]-)}", "|c%1|Hitem:%2|h[%3]|h|r")
+                        chatstring = string.gsub (chatstring, "{CLINK:enchant:(%x+):(%-?%d-):([^}]-)}", "|c%1|Henchant:%2|h[%3]|h|r")
+                        chatstring = string.gsub (chatstring, "{CLINK:quest:(%x+):(%-?%d-):(%-?%d-):([^}]-)}","|cffffff00|Hquest:%2:%3|h[%4]|h|r")
+                        chatstring = string.gsub (chatstring, "{CLINK:spell:(%x+):(%-?%d-):([^}]-)}","|c%1|Hspell:%2|h[%3]|h|r")
+                        chatstring = string.gsub (chatstring, "{CLINK:(%x+):(%-?%d-:%-?%d-:%-?%d-:%-?%d-:%-?%d-:%-?%d-:%-?%d-:%-?%d-):([^}]-)}", "|c%1|Hitem:%2|h[%3]|h|r")
+					    arg1 = chatstring
 					end
 				end
 
@@ -1277,7 +1209,7 @@ local function onevent()
 			            return
 			   		else
 				    	if debug then
-							DEFAULT_CHAT_FRAME:AddMessage("SendFilteredMessage5")
+							-- DEFAULT_CHAT_FRAME:AddMessage("SendFilteredMessage5")
 						end
 				    	SendFilteredMessage(event,ChatFrameID)
 				    	return
