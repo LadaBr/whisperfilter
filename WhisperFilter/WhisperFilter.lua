@@ -28,7 +28,9 @@ function len(T)
   return count
 end
 
-local backup  = ChatFrame_MessageEventHandler;
+local backup  = ChatFrame_MessageEventHandler
+local _ChatFrame_OpenChat = ChatFrame_OpenChat
+local _ChatEdit_OnEnterPressed = ChatEdit_OnEnterPressed
 local hooked = false
 local hookedhook = false
 local found = false
@@ -38,7 +40,14 @@ local hookbak = nil
 local PlayerName = nil
 local WhoFound = false
 
+local scroll = {}
+scroll.normal = 1
+scroll.shift = 5
+
 local NUMBER_OF_CHATBOXES = {}
+ChatFrames = {
+    ChatFrame1, ChatFrame2, ChatFrame3, ChatFrame4, ChatFrame5, ChatFrame6, ChatFrame7
+}
 
 
 
@@ -195,6 +204,9 @@ local function onevent()
 				ChannelInfo['CHANNEL10'] = {255,192,192, "[10]" }
 			end
 				
+
+
+
     		if WFCopyChatFontSize == nil then
 				WFCopyChatFontSize = 11
 			end
@@ -236,6 +248,10 @@ local function onevent()
 			if WFCopyChatDisabled == nil then
 				WFCopyChatDisabled = true		
 			end
+
+            if WFstickyAllDisabled == nil then
+                WFstickyAllDisabled = true
+            end
 
 
 			local frameN = CreateFrame("ScrollingMessageFrame", "DragFrame2", UIParent)
@@ -385,6 +401,81 @@ local function onevent()
 			for i=1,7 do
 				NUMBER_OF_CHATBOXES[i] = i
 			end
+
+            function StickyChatTypeOpen(text, chatFrame)
+                if not WFstickyAllDisabled then
+                    if ( not chatFrame ) then
+                        chatFrame = DEFAULT_CHAT_FRAME;
+                    end
+
+                    chatFrame.editBox:Show();
+                    chatFrame.editBox.setText = 1;
+                    chatFrame.editBox.text = text;
+                    local type = chatFrame.editBox:GetAttribute("chatType");
+                    chatFrame.editBox:SetAttribute("stickyType", type);
+                    ChatEdit_UpdateHeader(chatFrame.editBox)
+                else
+                    _ChatFrame_OpenChat(text, chatFrame)
+                end
+            end
+
+            ChatFrame_OpenChat = StickyChatTypeOpen
+
+            function StickyChatTypeSend()
+                if not WFstickyAllDisabled then
+                    ChatEdit_SendText(this, 1);
+                    local type = this:GetAttribute("chatType");
+                    this:SetAttribute("stickyType", type);
+                    ChatEdit_OnEscapePressed(this);
+                else
+                    _ChatEdit_OnEnterPressed()
+                end
+            end
+
+            ChatEdit_OnEnterPressed = StickyChatTypeSend
+
+
+            function ScrollLogic(self, delta)
+                if delta<0 then
+                    if IsControlKeyDown() then
+                        self:ScrollToBottom()
+                    else
+                        if IsShiftKeyDown() then
+                            for i=1, scroll.shift do
+                                self:ScrollDown()
+                            end
+                        else
+                            for i=1, scroll.normal do
+                                self:ScrollDown()
+                            end
+                        end
+                    end
+                else
+                    if IsControlKeyDown() then
+                        self:ScrollToTop()
+                    else
+                        if IsShiftKeyDown() then
+                            for i=1, scroll.shift do
+                                self:ScrollUp()
+                            end
+                        else
+                            for i=1, scroll.normal do
+                                self:ScrollUp()
+                            end
+                        end
+                    end
+                end
+            end
+
+            for i=1,len(ChatFrames) do
+                _G["ChatFrame"..i]:EnableMouseWheel(true)
+                _G["ChatFrame"..i]:SetScript("OnMouseWheel",function(self,delta)
+                    ScrollLogic(self, delta)
+                end)
+               
+            end
+            
+            
 			-- DEFAULT_CHAT_FRAME:AddMessage("NUMBER OF CHATS: "..table.getn(NUMBER_OF_CHATBOXES))
 			local chatBoxesButtons = {}
 			for i=1,table.getn(NUMBER_OF_CHATBOXES) do
@@ -405,6 +496,7 @@ local function onevent()
 						WFselectedCopyBox = this:GetID()
 						showEditbox(WFselectedCopyBox, true)
 					end)
+
 				end
 
 
@@ -466,6 +558,7 @@ local function onevent()
                 setFrameSize(messageFrame, WFCopyChatFontSize)
                 scroller:SetVerticalScroll(scroller:GetVerticalScrollRange() )
             end)
+
 
 
 			scroller:SetScrollChild(messageFrame)
@@ -694,6 +787,7 @@ local function onevent()
 			local happenedHighlight = false
 
 			local function SendFilteredMessage(event, frameID)
+
 				local type = strsub(event,10)
 				if type == "CHANNEL" then
 					type = type..arg8
@@ -1420,6 +1514,20 @@ local function onevent()
 					end
 					return
 				end
+
+                
+
+                if parse[0] == "sticky" then
+                    if WFstickyAllDisabled then
+                        WFstickyAllDisabled = false
+                        DEFAULT_CHAT_FRAME:AddMessage(whisp.."Sticky chat messages is enabled.")
+                    else
+                        WFstickyAllDisabled = true
+                        DEFAULT_CHAT_FRAME:AddMessage(whisp.."Sticky chat messages is disabled.")
+                    end
+                    return
+                end
+
 				if parse[0] == "clink" then
 					if WFClinkDisabled then
 						WFClinkDisabled = false
