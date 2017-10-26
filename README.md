@@ -38,6 +38,8 @@ If you are annoyed by whispers of gold sellers and beggers this is right choice 
 - /wf copychat limit <number> - Allows you to change number of history lines. If you experience any low FPS issues while opening History box then lower the value. Default: 1000
 - /wf copychat set "MSG_TYPE" <pattern> - Allows you to change how channel name shows in Copybox
 
+- /reload
+- /reloadui
 ## Channel Shortnames
 - Guild - [g]
 - Raid - [r] 
