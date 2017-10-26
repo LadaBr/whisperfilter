@@ -21,12 +21,12 @@ If you are annoyed by whispers of gold sellers and beggers this is right choice 
 - /ignore <player>
   
 - /wf clink - Enable/Disable feature
-- /wf copychat - Enable/Disable feature (Disabled by default)
+- /wf copychat - Enable/Disable feature **(Disabled by default)**
 - /wf error - Enable/Disable feature
-- /wf highlight - Enable/Disable feature (Disabled by default)
+- /wf highlight - Enable/Disable feature **(Disabled by default)**
 - /wf mute - Enable/Disable addon sounds
-- /wf autoinv|autoinvite - Enable/Disable feature (Disabled by default)
-- /wf guildblock - Enable/Disable. Blocks all guild invites (Disabled by default)
+- /wf autoinv|autoinvite - Enable/Disable feature **(Disabled by default)**
+- /wf guildblock - Enable/Disable. Blocks all guild invites **(Disabled by default)**
  
 - /wf error <text> - Adds error messages to blacklist
 - /wf phrase <text> - Adds phrase to blacklist
