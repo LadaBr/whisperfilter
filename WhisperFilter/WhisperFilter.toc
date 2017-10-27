@@ -1,0 +1,9 @@
+## Interface: 20400
+## Title: Psychi's Whisper Filter
+## Author: Psychi
+## DefaultState: Enabled
+## LoadOnDemand: 0
+## SavedVariables: ignoreUntilLvl, WFwhitelist, debug, WFblacklist, WFignoreDisabled, WIMWhoDisabled, WFignoreDisabledAll, WFClinkDisabled, WFCopyChatDisabled, WFblacklistPhrasesDisabled, WFblacklistPhrases, WFblacklistUIError, WFblacklistUIErrorDisabled, WFHighlightDisabled, WFHighlightLock, WFHighlightSizeW, WFHighlightSizeH, WFHighlightPosX, WFHighlightPosY, WFHighlightlist, WFautoinvList, WFautoinvDisabled, WFmute, WFselectedChatBox, WFselectedCopyBox, chatBoxes, tableLimit, WFCopyChatFontSize, frameSize, WFGuildBlock, WFstickyAllDisabled
+
+WhisperFilter.lua
+
