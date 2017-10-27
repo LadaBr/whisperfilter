@@ -1493,9 +1493,10 @@ local function onevent()
 
                 if not WFClinkDisabled then
                     if arg1 ~= nil then
-                        chatstring = string.gsub (arg1, "{CLINK:(%x+):(%d-):(%d-):(%d-):(%d-):([^}]-)}", "|c%1|Hitem:%2:%3:%4:%5|h[%6]|h|r")
-                        if chatstring == arg1 then
-                            chatstring = string.gsub (chatstring, "{CLINK:item:(%x+):(%-?%d-:%-?%d-:%-?%d-:%-?%d-:%-?%d-:%-?%d-:%-?%d-:%-?%d-):([^}]-)}", "|c%1|Hitem:%2|h[%3]|h|r")
+                        if GetBuildInfo() == "1.12.1" then
+                            chatstring = string.gsub (arg1, "{CLINK:(%x+):(%d-):(%d-):(%d-):(%d-):([^}]-)}", "|c%1|Hitem:%2:%3:%4:%5|h[%6]|h|r")
+                        else
+                            chatstring = string.gsub (arg1, "{CLINK:item:(%x+):(%-?%d-:%-?%d-:%-?%d-:%-?%d-:%-?%d-:%-?%d-:%-?%d-:%-?%d-):([^}]-)}", "|c%1|Hitem:%2|h[%3]|h|r")
                             chatstring = string.gsub (chatstring, "{CLINK:enchant:(%x+):(%-?%d-):([^}]-)}", "|c%1|Henchant:%2|h[%3]|h|r")
                             chatstring = string.gsub (chatstring, "{CLINK:quest:(%x+):(%-?%d-):(%-?%d-):([^}]-)}","|cffffff00|Hquest:%2:%3|h[%4]|h|r")
                             chatstring = string.gsub (chatstring, "{CLINK:spell:(%x+):(%-?%d-):([^}]-)}","|c%1|Hspell:%2|h[%3]|h|r")
