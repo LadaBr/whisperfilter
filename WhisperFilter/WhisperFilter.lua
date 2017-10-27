@@ -47,9 +47,6 @@ local hookbak = nil
 local PlayerName = nil
 local WhoFound = false
 
-local scroll = {}
-scroll.normal = 1
-scroll.shift = 5
 
 local NUMBER_OF_CHATBOXES = {}
 ChatFrames = {
@@ -470,47 +467,6 @@ local function onevent()
             end
 
             ChatEdit_OnEnterPressed = StickyChatTypeSend
-
-
-            function ScrollLogic(self, delta)
-                if delta<0 then
-                    if IsControlKeyDown() then
-                        self:ScrollToBottom()
-                    else
-                        if IsShiftKeyDown() then
-                            for i=1, scroll.shift do
-                                self:ScrollDown()
-                            end
-                        else
-                            for i=1, scroll.normal do
-                                self:ScrollDown()
-                            end
-                        end
-                    end
-                else
-                    if IsControlKeyDown() then
-                        self:ScrollToTop()
-                    else
-                        if IsShiftKeyDown() then
-                            for i=1, scroll.shift do
-                                self:ScrollUp()
-                            end
-                        else
-                            for i=1, scroll.normal do
-                                self:ScrollUp()
-                            end
-                        end
-                    end
-                end
-            end
-
-            for i=1,len(ChatFrames) do
-                ChatFrames[i]:EnableMouseWheel(true)
-                ChatFrames[i]:SetScript("OnMouseWheel",function(self,delta)
-                    ScrollLogic(self, delta)
-                end)
-               
-            end
             
             
             -- DEFAULT_CHAT_FRAME:AddMessage("NUMBER OF CHATS: "..table.getn(NUMBER_OF_CHATBOXES))
@@ -636,7 +592,17 @@ local function onevent()
                         if tableSize >= tableLimit then
                             tableSize = tableLimit
                         end
-                        local str = table.concat(chatBoxes[frameIDs],"\n")
+                        local str = ""
+                        if GetBuildInfo() == "1.12.1" then
+                            local size = len(chatBoxes[frameIDs])
+                            for i=1,size do
+                                str = str..chatBoxes[frameIDs][size-i+1].."\n"
+                            end
+                            
+                        else
+                            str = table.concat(chatBoxes[frameIDs],"\n")
+                        end
+
                         messageFrame:Insert(str)
                         setFrameSize(messageFrame, WFCopyChatFontSize)
                         
