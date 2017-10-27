@@ -3,7 +3,8 @@
 ## Author: Psychi
 ## DefaultState: Enabled
 ## LoadOnDemand: 0
-## SavedVariables: ignoreUntilLvl, WFwhitelist, debug, WFblacklist, WFignoreDisabled, WIMWhoDisabled, WFignoreDisabledAll, WFClinkDisabled, WFCopyChatDisabled, WFblacklistPhrasesDisabled, WFblacklistPhrases, WFblacklistUIError, WFblacklistUIErrorDisabled, WFHighlightDisabled, WFHighlightLock, WFHighlightSizeW, WFHighlightSizeH, WFHighlightPosX, WFHighlightPosY, WFHighlightlist, WFautoinvList, WFautoinvDisabled, WFmute, WFselectedChatBox, WFselectedCopyBox, chatBoxes, tableLimit, WFCopyChatFontSize, frameSize, WFGuildBlock, WFstickyAllDisabled
+## SavedVariables: ignoreUntilLvl, WFwhitelist, debug, WFblacklist, WFignoreDisabled, WIMWhoDisabled, WFignoreDisabledAll, WFClinkDisabled, WFCopyChatDisabled, WFblacklistPhrasesDisabled, WFblacklistPhrases, WFblacklistUIError, WFblacklistUIErrorDisabled, WFHighlightDisabled, WFHighlightLock, WFHighlightSizeW, WFHighlightSizeH, WFHighlightPosX, WFHighlightPosY, WFHighlightlist, WFautoinvList, WFautoinvDisabled, WFmute, WFselectedChatBox, WFselectedCopyBox, chatBoxes, tableLimit, WFCopyChatFontSize, frameSize, WFGuildBlock, WFstickyAllDisabled, LootList, WFLootFilterDisabled
 
 WhisperFilter.lua
+ChatScroll.xml
 
