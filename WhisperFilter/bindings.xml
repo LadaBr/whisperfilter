@@ -1,0 +1,5 @@
+<Bindings>
+  <Binding name="WFSHOWEDITBOX" description="Show Editbox" header="WHISPERFILTER">
+    showEditbox(WFselectedCopyBox);
+  </Binding>
+</Bindings>
