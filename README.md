@@ -1,5 +1,6 @@
 
 **This is universal release. It is compatible with 1.1.2 and 2.4.3 WoW patches.**
+
 **You have to edit Addon Interface to match your WoW patch. If you are lazy to do it or you don't know how choose different branch with predefined .toc file.**
 
 # WhisperFilter
