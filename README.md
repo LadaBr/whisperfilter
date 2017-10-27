@@ -1,4 +1,4 @@
-This is first release of TBC version ported from Vanilla one. There is possibility that something won't be functional as intended. Feel free to report the issue.
+**This is universal release. It is compatible with 1.1.2 and 2.4.3 WoW patches.**
 
 # WhisperFilter
 If you are annoyed by whispers of gold sellers and beggers this is right choice for you.
