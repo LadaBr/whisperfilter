@@ -762,6 +762,10 @@ local function onevent()
                 WFautoinvDisabled = true
             end
             
+            if LootList == nil then
+                -- DEFAULT_CHAT_FRAME:AddMessage("TABLE LOADED")
+                LootList = {}
+            end
             
             if debug == nil then
                 debug = false
