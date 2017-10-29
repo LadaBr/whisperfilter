@@ -813,7 +813,7 @@ local function onevent()
                 
                 local tableID
                 for i=1,table.getn(LootList) do
-                    if LootList[i][1] == id then
+                    if LootList[i][1] == id and time() < LootList[i]["start"] + LootList[i]["done"] and not LootList[i].finished then
                         tableID = i
                         -- DEFAULT_CHAT_FRAME:AddMessage("TABLE ID: "..tableID)
                         break
@@ -875,6 +875,9 @@ local function onevent()
                     if debug then 
                         DEFAULT_CHAT_FRAME:AddMessage("LOOT ROLL STARTED. ID: "..arg1.." "..itemLink)
                     end
+                    if itemLink == nil then
+                        return
+                    end
                     local texture, name, count, quality = GetLootRollItemInfo(arg1);
                     local timeLeft = floor(GetLootRollTimeLeft(arg1) / 1000)
                     local itemInfo = {arg1, itemLink, texture, name, count, quality, {}, {}, {}, "", {[1] = nil,[2] = nil}, {}, {}, {}, finished=false, start=time(), done=timeLeft, duplicates=0 }
@@ -916,6 +919,9 @@ local function onevent()
                         --local numItem = findItem+strlen(findItem)
                         itemLink = strsub(arg1,startPos,endPos)
                         --DEFAULT_CHAT_FRAME:AddMessage("Logging info about: "..itemLink)
+                    end
+                    if itemLink == nil then
+                        return
                     end
                     for str in string.gfind(arg1, "[^%s]+") do
                         p = p + 1
