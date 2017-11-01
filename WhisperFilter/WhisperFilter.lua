@@ -1199,7 +1199,11 @@ local function onevent()
                             elseif arg2 ~= nil and parse ~= nil then
                                 -- DEFAULT_CHAT_FRAME:AddMessage("AAAAAAAAAAtype: "..type.." SHORTCUT: "..ChannelInfo[type][4])
                                 --check = "\124cffffffff\124h"..hour..":"..minute..":"..second.."\124cff"..hexcolor.."\124h "..ChannelInfo[type][4].." |Hplayer:"..arg2.."|h["..arg2.."]|h: "..arg1
-                                check = timeFormat.." "..ChannelInfo[type][4].." ["..arg2.."] "..arg1
+                                if strlen(arg2) > 0 then
+                                    check = timeFormat.." "..ChannelInfo[type][4].." ["..arg2.."] "..arg1
+                                else
+                                    check = timeFormat.." "..ChannelInfo[type][4].." "..arg1
+                                end
                             end
                         end
 
