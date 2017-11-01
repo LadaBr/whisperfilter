@@ -220,7 +220,7 @@ local function onevent()
 
 
             if WFCopyChatFontSize == nil then
-                WFCopyChatFontSize = 11
+                WFCopyChatFontSize = ChatFontSmall:GetFont()[2]
             end
 
             if chatBoxes == nil then
@@ -369,7 +369,7 @@ local function onevent()
 
             local frame  = CreateFrame("Frame", "WhisperFilterFrame", UIParent)
             frame.width  = 500
-            frame.height = 254
+            frame.height = 350
             frame:SetFrameStrata("DIALOG")
             frame:SetWidth(frame.width)
             frame:SetHeight(frame.height)
@@ -516,25 +516,31 @@ local function onevent()
 
 
 
-            local messageFrame = CreateFrame("EditBox", nil, scroller)
-            messageFrame:SetPoint("BOTTOM", 0, 0)
+            local messageFrame = CreateFrame("EditBox", nil, frame)
+            messageFrame:SetPoint("CENTER", 0, 0)
             messageFrame:SetWidth(frame.width - 70)
-            messageFrame:SetFont("Fonts\\FRIZQT__.TTF", WFCopyChatFontSize)
+            --messageFrame:SetFont("Fonts\\FRIZQT__.TTF", WFCopyChatFontSize)
+            messageFrame:SetFontObject(ChatFontSmall)
             messageFrame:SetTextColor(1, 1, 1, 1) -- default color
             messageFrame:SetJustifyH("LEFT")
             --messageFrame:SetMaxLetters(0)
             messageFrame:SetAutoFocus(false)
             messageFrame:SetMultiLine(true)
+            --messageFrame:SetMaxLetters(99999)
+            messageFrame:EnableMouse(true)
             frame.messageFrame = messageFrame
 
             function setFrameSize(frame, fontSize)
                 frameSize = frame:GetHeight()/fontSize
-                if frameSize < 18 then
-                    frameSize = 18
+                parentSize = frame:GetParent():GetHeight() / fontSize
+                
+                if frameSize < parentSize then
+                    frameSize = parentSize +1
                 end
-
-                FauxScrollFrame_Update(scroller,  frameSize, 17, fontSize)
+                FauxScrollFrame_Update(scroller, frameSize ,  parentSize, fontSize)
             end
+
+
 
             messageFrame:SetScript("OnEscapePressed",function()
                 if debug then
@@ -551,6 +557,7 @@ local function onevent()
                 setFrameSize(messageFrame, WFCopyChatFontSize)
                 scroller:SetVerticalScroll(scroller:GetVerticalScrollRange() )
             end)
+
 
 
 
@@ -603,7 +610,7 @@ local function onevent()
                             str = table.concat(chatBoxes[frameIDs],"\n")
                         end
 
-                        messageFrame:Insert(str)
+                        messageFrame:SetText(str)
                         setFrameSize(messageFrame, WFCopyChatFontSize)
                         
                         
@@ -692,7 +699,7 @@ local function onevent()
             
 
 
-            DEFAULT_CHAT_FRAME:AddMessage(whisp..arg1.."loaded just for you. <3")
+            DEFAULT_CHAT_FRAME:AddMessage(whisp..arg1.." loaded just for you. <3")
             DEFAULT_CHAT_FRAME:AddMessage(whisp.."Filter set to level: "..ignoreUntilLvl)
         
             if WFHighlightDisabled or WFHighlightLock then
@@ -823,7 +830,7 @@ local function onevent()
                 
                 --DEFAULT_CHAT_FRAME:AddMessage("Roll time on item  expires in "..time)
 
-                if GetLootRollTimeLeft(id) < timer  then
+                if GetLootRollTimeLeft(id) < timer and tableID ~= nil then
                     if not LootList[tableID]["finished"] then
                         local texture, name, count, quality = GetLootRollItemInfo(id)
                         local numOfRollers = table.getn(LootList[tableID][12]) + table.getn(LootList[tableID][13]) + table.getn(LootList[tableID][14])
@@ -1168,23 +1175,31 @@ local function onevent()
                            -- ChatFrame3:AddMessage(arg1..arg2)
                         
                         local parse = strsub(event,10)
-                            local check
+                        local check
                         local hexcolor
                         if ChannelInfo[type] ~= nil then
                             hexcolor = RGBToHex(ChannelInfo[type][1],ChannelInfo[type][2],ChannelInfo[type][3])
                         else
                             hexcolor = "ffffff"
                         end
+                        local timeFormat = hour..":"..minute..":"..second
+                        if hexcolor ~= "ffffff" then
+                            --timeFormat = timeFormat.."\124cff"..hexcolor.."\124h"
+                        end
                         if string.find(type,"MONSTER") then
-                            check = "\124cffffffff\124h"..hour..":"..minute..":"..second.."\124cff"..hexcolor.."\124h "..arg2..": "..arg1
-                        elseif string.find(type,"COMBAT") or string.find(type,"AURA") or string.find(type,"SPELL") then
+                            --check = "\124cffffffff\124h"..hour..":"..minute..":"..second.."\124cff"..hexcolor.."\124h "..arg2..": "..arg1
+                            check = timeFormat.." "..arg2..": "..arg1
+                        elseif string.find(type,"COMBAT") or string.find(type,"AURA") or string.find(type,"SPELL") or string.find(type,"SYSTEM") then
+                            --check = "\124cffffffff\124h"..hour..":"..minute..":"..second.."\124cff"..hexcolor.."\124h "..arg1
                             check = "\124cffffffff\124h"..hour..":"..minute..":"..second.."\124cff"..hexcolor.."\124h "..arg1
                         elseif ChannelInfo[type] ~= nil then
                             if ChannelInfo[type][4] == nil then
-                                check = "\124cffffffff\124h"..hour..":"..minute..":"..second.."\124cff"..hexcolor.."\124h "..arg1
+                                --check = "\124cffffffff\124h"..hour..":"..minute..":"..second.."\124cff"..hexcolor.."\124h "..arg1
+                                check = timeFormat.." "..arg1
                             elseif arg2 ~= nil and parse ~= nil then
                                 -- DEFAULT_CHAT_FRAME:AddMessage("AAAAAAAAAAtype: "..type.." SHORTCUT: "..ChannelInfo[type][4])
-                                check = "\124cffffffff\124h"..hour..":"..minute..":"..second.."\124cff"..hexcolor.."\124h "..ChannelInfo[type][4].." |Hplayer:"..arg2.."|h["..arg2.."]|h: "..arg1
+                                --check = "\124cffffffff\124h"..hour..":"..minute..":"..second.."\124cff"..hexcolor.."\124h "..ChannelInfo[type][4].." |Hplayer:"..arg2.."|h["..arg2.."]|h: "..arg1
+                                check = timeFormat.." "..ChannelInfo[type][4].." ["..arg2.."] "..arg1
                             end
                         end
 
