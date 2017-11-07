@@ -36,7 +36,7 @@ elseif type(ChatFrame_OnEvent) ~= "nil" then
 end
 
 local _ChatFrame_OpenChat = ChatFrame_OpenChat
-local _ChatEdit_OnEnterPressed = ChatEdit_OnEnterPressed
+--local _ChatEdit_OnEnterPressed = ChatEdit_OnEnterPressed
 
 local hooked = false
 local hookedhook = false
@@ -445,8 +445,10 @@ local function onevent()
             ChatFrame_OpenChat = StickyChatTypeOpen
 
             function StickyChatTypeSend()
+                
                 if not WFstickyAllDisabled then
-                    ChatEdit_SendText(this, 1);
+                    DEFAULT_CHAT_FRAME:AddMessage("STICKY")
+                    --ChatEdit_SendText(this, 1);
                     local type
                     if this.GetAttribute ~= nil then
                         type = this:GetAttribute("chatType")
@@ -460,13 +462,9 @@ local function onevent()
                         this.stickyType = type;
                     end
 
-                    ChatEdit_OnEscapePressed(this)
-                else
-                    _ChatEdit_OnEnterPressed()
+                    --ChatEdit_OnEscapePressed(this)
                 end
             end
-
-            ChatEdit_OnEnterPressed = StickyChatTypeSend
             
             
             -- DEFAULT_CHAT_FRAME:AddMessage("NUMBER OF CHATS: "..table.getn(NUMBER_OF_CHATBOXES))
@@ -1384,6 +1382,8 @@ local function onevent()
 
 
             function ChatFilter(event)
+
+
                 local ChatFrameID = this:GetID()
                 local activeChannel = false
                 
@@ -1532,6 +1532,7 @@ local function onevent()
                 end
 
                 if ChatFrameID ~= nil then
+
                     if event == "CHAT_MSG_SYSTEM" then
                         if debug then
                             DEFAULT_CHAT_FRAME:AddMessage(arg1)
@@ -1670,14 +1671,14 @@ local function onevent()
                         return
                     else
                         if debug then
-                            -- DEFAULT_CHAT_FRAME:AddMessage("SendFilteredMessage5")
+                            --DEFAULT_CHAT_FRAME:AddMessage("SendFilteredMessage5")
                         end
                         SendFilteredMessage(event,ChatFrameID)
                         return
                     end
                 else
                     if debug then
-                        this:AddMessage("SendFilteredMessage8")
+                        --this:AddMessage("SendFilteredMessage8")
                     end
                     SendFilteredMessage(event,ChatFrameID)
                     return
